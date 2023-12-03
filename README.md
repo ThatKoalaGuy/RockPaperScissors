@@ -2,7 +2,11 @@
  
 This was created as a project when learning with TOP.
 
-Instalation instructions:\
+## How to play
+-Visit the [github page](thatkoalaguy.github.io/RockPaperScissors) for it
+
+
+### Or alternitavely:
 -Clone the files\
 -Make sure they are in the same folder\
 -Open index.html\

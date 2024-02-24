@@ -1,124 +1,164 @@
-function getComputerChoice() {
-    
-    //Generate a random int between 1 and 3 (inculding)
-    min = 1;
-    max = 3;
-    let computerChoice = Math.floor(Math.random() * (max - min + 1) + min);
-
-    //Assign a word to the number
-    if (computerChoice === 1){
-        return "Rock";
-    }
-
-    else if (computerChoice === 2){
-        return "Paper";
-    }
-
-    else if (computerChoice === 3){
-        return "Scissors";
-    }    
-}
-
+//Init the consts
+const btnR = document.querySelector("#btnR");
+const btnP = document.querySelector("#btnP");
+const btnS = document.querySelector("#btnS");
 
 //init the variables for keeping track of the score
 let computerScore = 0;
 let playerScore = 0;
 
+let roundsPlayed = 0;
+let playerSelection;
+
+
+const scoreboard = document.querySelector("#scoreboard");
+const statusOfRound = document.querySelector("#status");
+
+const finalResult = document.querySelector("#finalResult");
+const gameEndNotification = document.querySelector("#gameEndNotification");
+
+//Add event listeners
+(function eventListeners(){
+    btnR.addEventListener('click', () => {
+        playerSelection = "Rock";
+        playRound();
+    })
+    
+    btnP.addEventListener('click', () => {
+        playerSelection = "Paper";
+        playRound();
+    })
+    
+    btnS.addEventListener('click', () => {
+        playerSelection = "Scissors";
+        playRound();
+    })
+})();
+
+
+function getComputerChoice() {
+    
+    //* Generate a random int between 1 and 3 (inculding)
+    min = 1;
+    max = 3;
+    let computerChoice = Math.floor(Math.random() * (max - min + 1) + min);
+
+    switch(computerChoice) {
+
+        case 1:
+            return "Rock";
+        case 2:
+            return "Paper";
+        case 3:
+            return "Scissors";
+    }
+}
+
+
+function playRound(){
+    if (roundsPlayed < 5) {
+        singleRound(playerSelection, getComputerChoice());
+        roundsPlayed++;
+        finalResult.textContent = "";
+        gameEndNotification.textContent = "";
+    }
+    if (roundsPlayed === 5) {
+        endGame();
+    }
+}
+
 function singleRound(playerSelection, computerSelection) {
 
+    //deafult state
     let tie = false;
     let wonOrLost = null;
 
-    //Make the first letter capitalized, other lower case
-    playerSelectionLength = playerSelection.length;
-    let firstLetter = playerSelection.slice(0, 1);
-    remainingWord = playerSelection.slice(1, playerSelectionLength)
-    remainingWord = remainingWord.toLowerCase();
-    firstLetter = firstLetter.toUpperCase();
-    
-    //Join the word back together
-    playerSelection = firstLetter + remainingWord;
 
     //If ROCK is selected
     if (computerSelection === "Rock") {
+        switch(playerSelection) {
 
-        if (playerSelection === "Rock") {
-            tie = true;
-        }
-        else if (playerSelection === "Paper") {
-            wonOrLost = true;
-        }
-        else if (playerSelection === "Scissors") {
-            wonOrLost = false;
+            case "Rock":
+                tie = true;
+                break;
+            case "Paper":
+                wonOrLost = true;
+                break;
+            case "Scissors":
+                wonOrLost = false;
+                break;
         }
     }
 
     //If PAPER is selected
     else if (computerSelection === "Paper") {
+        switch(playerSelection) {
 
-        if (playerSelection === "Rock") {
-            wonOrLost = false;
-        }
-        else if (playerSelection === "Paper") {
-            tie = true;
-        }
-        else if (playerSelection === "Scissors") {
-            wonOrLost = true;
+            case "Rock":
+                wonOrLost = false;
+                break;
+            case "Paper":
+                tie = true;
+                break;
+            case "Scissors":
+                wonOrLost = true;
+                break;
         }
     }
     
     //If SCISSORS is selected
     else if (computerSelection === "Scissors") {
+        switch(playerSelection) {
 
-        if (playerSelection === "Rock") {
-            wonOrLost = true;
-        }
-        else if (playerSelection === "Paper") {
-            wonOrLost = false;
-        }
-        else if (playerSelection === "Scissors") {
-            tie = true;
+            case "Rock":
+                wonOrLost = true;
+                break;
+            case "Paper":
+                wonOrLost = false;
+                break;
+            case "Scissors":
+                tie = true;
+                break;
         }
     }
 
-
-    //Output the status of the game
+    //Output the status of the round
     if (tie === true) {
-        alert("The game resulted in a tie, replaying");
-        singleRound(prompt("Rock, paper or scissors"), getComputerChoice());
+        statusOfRound.textContent = "The round resulted in a tie";
     }
     else if (wonOrLost === true) {
-        alert("You won");
+        statusOfRound.textContent = "You won the round";
         playerScore = playerScore + 1;
     }
     else if (wonOrLost === false) {
-        alert("You lost");
+        statusOfRound.textContent = "You lost the round";
         computerScore = computerScore + 1;
     }
 
+
+    scoreboard.textContent = "You: " + playerScore + " vs Computer: " + computerScore;
 }
 
 
-function game(){
-    //Loop 5 times
-    for (i = 0; i < 5; i++){
-        singleRound(prompt("Rock, paper or scissors"), getComputerChoice());
-    }
 
+function endGame(){
     //Output the final result
-    alert("The final score: " + playerScore + " for you versus " + computerScore + " for the computer!")
+    finalResult.textContent = ("The final score: " + playerScore + " for you versus " + computerScore + " for the computer!");
 
     if (playerScore > computerScore){
-        alert("Congratulations, you won!")
+        gameEndNotification.textContent = "Congratulations, you won!";
     }
 
     else if (computerScore > playerScore){
-        alert("You lost.")
+        gameEndNotification.textContent = "You lost.";
     }
 
     else if (playerScore === computerScore){
-        alert("The game concluded in a tie.")
+        gameEndNotification.textContent = "The game concluded in a tie.";
     }
-}
 
-game();
+    //Reset the game
+    roundsPlayed = 0;
+    playerScore = 0;
+    computerScore = 0;
+}

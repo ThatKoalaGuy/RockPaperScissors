@@ -1,4 +1,4 @@
-//Init the consts
+//Init the constants
 const btnR = document.querySelector('#btnR');
 const btnP = document.querySelector('#btnP');
 const btnS = document.querySelector('#btnS');
@@ -35,7 +35,7 @@ const gameEndNotification = document.querySelector('#gameEndNotification');
 })();
 
 function getComputerChoice() {
-	//* Generate a random int between 1 and 3 (inculding)
+	//* Generate a random int between 1 and 3 (including)
 	min = 1;
 	max = 3;
 	let computerChoice = Math.floor(Math.random() * (max - min + 1) + min);
@@ -63,7 +63,7 @@ function playRound() {
 }
 
 function singleRound(playerSelection, computerSelection) {
-	//deafult state
+	//default state
 	let tie = false;
 	let wonOrLost = null;
 

@@ -36,8 +36,8 @@ const gameEndNotification = document.querySelector('#gameEndNotification');
 
 function getComputerChoice() {
 	//* Generate a random int between 1 and 3 (including)
-	min = 1;
-	max = 3;
+	let min = 1;
+	let max = 3;
 	let computerChoice = Math.floor(Math.random() * (max - min + 1) + min);
 
 	switch (computerChoice) {

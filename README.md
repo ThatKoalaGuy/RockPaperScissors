@@ -7,7 +7,6 @@ Visit the [github page](https://thatkoalaguy.github.io/RockPaperScissors/) for i
 
 
 ### Or alternitavely:
-1. Clone the files
-2. Make sure they are in the same folder
-3. Open index.html
-4. Play the game
+1. Clone the repo
+2. Open index.html
+3. Play the game
